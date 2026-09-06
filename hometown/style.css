@@ -4,6 +4,11 @@
     box-sizing: border-box; 
 }
 
+/* 【研究任务2】声明页面同时支持浅色/深色，让浏览器控件跟随系统 */
+:root {
+    color-scheme: light dark;
+}
+
 body {
     font-family: "Microsoft YaHei", sans-serif;
     line-height: 1.6;
@@ -46,7 +51,9 @@ body {
     color: white;
 }
 
-.hero h1 { font-size: 3rem; margin-bottom: 10px; }
+/* 【研究任务1】clamp(最小值, 首选值, 最大值)：字号随窗口宽度连续平滑变化
+   首选值 5vw：窗口每宽 100px，字号增大 5px；小于 2rem 或大于 3rem 时被钳制 */
+.hero h1 { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 10px; }
 
 .container {
     max-width: 1200px;
@@ -57,7 +64,8 @@ body {
 .section-title {
     text-align: center;
     margin-bottom: 30px;
-    font-size: 2rem;
+    /* 【研究任务1】第二处流式字号：clamp(1.5rem, 3vw, 2rem) */
+    font-size: clamp(1.5rem, 3vw, 2rem);
     color: #2c3e50;
     border-bottom: 2px solid #3498db;
     display: inline-block;
@@ -84,10 +92,11 @@ body {
 }
 
 .card-img {
+    width: 100%;
     height: 200px;
-    background-color: #eee; 
-    background-size: cover;
-    background-position: center;
+    /* 关键：图片按 300x200 的框等比裁切填充，不拉伸变形 */
+    object-fit: cover;
+    display: block;
 }
 
 .card-text {
@@ -115,9 +124,7 @@ footer {
         gap: 15px;
     }
 
-    .hero h1 {
-        font-size: 2rem;
-    }
+    /* 注：hero h1 的移动端字号不再需要媒体查询，clamp() 已自动覆盖 */
 
     .card {
         width: 100%; 
@@ -126,5 +133,75 @@ footer {
     
     .container {
         padding: 20px 15px;
+    }
+}
+
+/* ========== 【研究任务2】深色模式：跟随系统自动切换 ==========
+   prefers-color-scheme: dark 会在操作系统处于深色模式时生效，
+   无需 JS，刷新/切换系统主题即时响应 */
+
+@media (prefers-color-scheme: dark) {
+    body {
+        color: #d0d0d0;        /* 正文换浅灰字 */
+        background-color: #121212;  /* 页面底色换近黑 */
+    }
+
+    .navbar {
+        background-color: #1a252f;  /* 深蓝黑导航 */
+    }
+
+    .hero {
+        background-color: #1f5f8b;  /* 降饱和的深蓝横幅 */
+    }
+
+    .section-title {
+        color: #ecf0f1;             /* 标题改浅色才看得见 */
+        border-bottom-color: #4aa3df;
+    }
+
+    .card {
+        background: #1e2a36;        /* 卡片改深蓝灰 */
+        box-shadow: 0 4px 6px rgba(0,0,0,0.5);
+    }
+
+    footer {
+        background-color: #1a252f;
+    }
+}
+
+/* ========== 【研究任务3】打印样式：@media print ==========
+   只在打印/打印预览时生效，屏幕上完全不受影响 */
+
+@media print {
+    /* 规则1：导航栏和页脚对纸质读者无意义（链接点不了、版权页脚多余），隐藏省纸 */
+    .navbar,
+    footer {
+        display: none;
+    }
+
+    /* 规则2：卡片从多列 flex 改为块级堆叠，正文单栏显示，避免并排卡片被裁到两页 */
+    .card-grid {
+        display: block;
+    }
+
+    /* 规则3：卡片撑满纸宽，去掉屏幕装饰性的阴影（打印黑白且费墨），改细边框分隔；
+       break-inside: avoid 防止一张卡片跨页被切成两半 */
+    .card {
+        width: 100%;
+        box-shadow: none;
+        border: 1px solid #ccc;
+        break-inside: avoid;
+        margin-bottom: 12px;
+    }
+
+    /* 规则4：横幅不需要占 60vh 纸高，压缩为内容高度；打印默认不印背景色，
+       文字改纯黑保证黑白打印机可读 */
+    .hero {
+        height: auto;
+        padding: 20px 0;
+    }
+
+    body {
+        color: #000;
     }
 }
