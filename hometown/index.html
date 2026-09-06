@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <!-- 关键：这行代码保证了移动端显示正常，满足要求2 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>魅力德宏 - 家乡风光</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- 1. 顶部导航栏 -->
+    <header class="navbar">
+        <div class="logo">🌴 德宏印象</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#home">首页</a></li>
+                <li><a href="#scenery">绝美风光</a></li>
+                <li><a href="#food">特色美食</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- 2. 首页大图横幅 (Hero Section) -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>欢迎来到德宏</h1>
+            <p>探秘中缅边境的热带风情与民族瑰宝</p>
+        </div>
+    </section>
+
+    <!-- 3. 内容区块：风光与美食 (Grid/Flex 布局区) -->
+    <main class="container">
+        
+        <!-- 区块一：绝美风光 (3张卡片) -->
+        <section id="scenery">
+            <h2 class="section-title">绝美风光</h2>
+            <div class="card-grid">
+                <!-- 卡片 1 -->
+                <div class="card">
+                    <div class="card-img" style="background-color: #ddd;"></div> <!-- 这里放图片 -->
+                    <div class="card-text">
+                        <h3>勐焕大金塔</h3>
+                        <p>中国第一金佛塔，亚洲第一空心佛塔，德宏的标志性建筑。</p>
+                    </div>
+                </div>
+                <!-- 卡片 2 -->
+                <div class="card">
+                    <div class="card-img" style="background-color: #ccc;"></div>
+                    <div class="card-text">
+                        <h3>瑞丽莫里雨林</h3>
+                        <p>热带雨林奇观，负氧离子爆棚的天然氧吧。</p>
+                    </div>
+                </div>
+                <!-- 卡片 3 -->
+                <div class="card">
+                    <div class="card-img" style="background-color: #bbb;"></div>
+                    <div class="card-text">
+                        <h3>盈江凯邦亚湖</h3>
+                        <p>群山环抱的高原湖泊，景色秀丽，气候宜人。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 区块二：特色美食 (3张卡片) -->
+        <section id="food">
+            <h2 class="section-title">舌尖上的德宏</h2>
+            <div class="card-grid">
+                <!-- 卡片 4 -->
+                <div class="card">
+                    <div class="card-img" style="background-color: #aaa;"></div>
+                    <div class="card-text">
+                        <h3>过手米线</h3>
+                        <p>阿昌族特色小吃，用手抓着吃的米线，风味独特。</p>
+                    </div>
+                </div>
+                <!-- 卡片 5 -->
+                <div class="card">
+                    <div class="card-img" style="background-color: #999;"></div>
+                    <div class="card-text">
+                        <h3>泡鲁达</h3>
+                        <p>西米、椰奶、面包干...夏日解暑的神仙甜品。</p>
+                    </div>
+                </div>
+                <!-- 卡片 6 -->
+                <div class="card">
+                    <div class="card-img" style="background-color: #888;"></div>
+                    <div class="card-text">
+                        <h3>景颇鬼鸡</h3>
+                        <p>乌鸡撕碎拌上小米辣和柠檬，酸辣开胃。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 4. 页脚 -->
+    <footer>
+        <p>&copy; 2024 德宏风光专题页 | 制作人：[你的名字]</p>
+    </footer>
+
+</body>
+</html>
