@@ -1,0 +1,6 @@
+/* 自定义覆盖样式：本文件必须在 bootstrap.min.css 之后引入，
+   同等优先级下后加载的规则生效；这里再用 .card .card-title
+   后代选择器提高一级优先级，覆盖框架默认标题颜色。 */
+.card .card-title {
+  color: #0b5ed7;
+}
