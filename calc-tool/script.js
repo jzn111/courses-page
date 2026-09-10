@@ -62,3 +62,29 @@ console.log('清洗后课程：', graded);
 console.log('加权绩点：', totalGPA(graded));
 console.log('平均分：', averageScore(graded));
 console.log('不及格：', failedCourses(graded));
+
+// 第三步：格式化报告
+const report = (list) => {
+  const valid = cleanCourses(list);
+  if (valid.length === 0) {
+    return '没有有效课程，无法计算绩点';
+  }
+  const graded = withGPA(valid);
+  const totalCredits = graded.reduce((sum, c) => sum + c.credit, 0);
+  const failed = failedCourses(graded);
+  return `本学期共${graded.length}门有效课程，总学分${totalCredits}，加权平均绩点${totalGPA(graded)}，平均分${averageScore(graded)}；不及格${failed.length}门：${failed.join('、') || '无'}`;
+};
+
+// 正常数据
+try {
+  console.log('【正常数据】', report(courses));
+} catch (err) {
+  console.error('报告生成失败：', err.message);
+}
+
+// 空数据测试
+try {
+  console.log('【空数据】', report([]));
+} catch (err) {
+  console.error('报告生成失败：', err.message);
+}
