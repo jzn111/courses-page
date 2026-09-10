@@ -31,3 +31,38 @@ console.log('清洗后：', cleanScores(scores));
 console.log('平均分：', average(cleanScores(scores)));
 console.log('最高分：', highest(cleanScores(scores)));
 console.log('不及格：', failed(cleanScores(scores)));
+
+// 第三步：等级分布与格式化报告
+// 等级判定：单值进单值出的纯函数
+const toGrade = (score) => {
+  if (score >= 90) return 'A';
+  if (score >= 80) return 'B';
+  if (score >= 70) return 'C';
+  if (score >= 60) return 'D';
+  return 'F';
+};
+
+// 各等级人数统计：forEach 遍历，用对象计数
+const gradeCount = (list) => {
+  const result = { A: 0, B: 0, C: 0, D: 0, F: 0 };
+  list.forEach(s => { result[toGrade(s.score)]++; });
+  return result;
+};
+
+// 格式化报告：组装所有统计结果为一段可读文字
+const report = (list) => {
+  const valid = cleanScores(list);
+  if (valid.length === 0) {
+    return '没有有效成绩';
+  }
+  const dist = gradeCount(valid);
+  const top = highest(valid);
+  return `有效人数${valid.length}人，平均${average(valid)}分，最高${top.score}分（${top.name}）；等级分布：A${dist.A}人 B${dist.B}人 C${dist.C}人 D${dist.D}人 F${dist.F}人；不及格名单：${failed(valid).join('、') || '无'}`;
+};
+
+// 用 try...catch 包住报告生成，防止意外崩溃
+try {
+  console.log(report(scores));
+} catch (err) {
+  console.error('报告生成失败：', err.message);
+}
