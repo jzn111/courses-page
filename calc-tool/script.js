@@ -13,3 +13,52 @@ const courses = [
 ];
 
 console.table(courses);
+
+// 第二步：清洗与计算函数
+// 清洗：只保留学分>0 且 成绩在0~100之间的合法课程（filter 返回新数组）
+const cleanCourses = (list) =>
+  list.filter(c => c.credit > 0 && c.score >= 0 && c.score <= 100);
+
+// 单科成绩转绩点（纯函数，单值进单值出）
+// 规则：90+→4.0，80+→3.0，70+→2.0，60+→1.0，<60→0
+const toGPA = (score) => {
+  if (score >= 90) return 4.0;
+  if (score >= 80) return 3.0;
+  if (score >= 70) return 2.0;
+  if (score >= 60) return 1.0;
+  return 0;
+};
+
+// 为每门课补算绩点：map 返回新数组，给每个对象加上 gpa 字段
+const withGPA = (list) => list.map(c => ({ ...c, gpa: toGPA(c.score) }));
+
+// 加权平均绩点：reduce 累计 (绩点×学分) 和 (学分)，两者相除
+const totalGPA = (list) => {
+  if (list.length === 0) return 0;
+  const { points, credits } = list.reduce(
+    (acc, c) => ({
+      points: acc.points + c.gpa * c.credit,
+      credits: acc.credits + c.credit
+    }),
+    { points: 0, credits: 0 }
+  );
+  return credits === 0 ? 0 : Number((points / credits).toFixed(2));
+};
+
+// 平均分：reduce 累加成绩后除以课程数
+const averageScore = (list) => {
+  if (list.length === 0) return 0;
+  const total = list.reduce((sum, c) => sum + c.score, 0);
+  return Number((total / list.length).toFixed(2));
+};
+
+// 不及格课程名单：filter 挑出 <60，再 map 只取课程名
+const failedCourses = (list) =>
+  list.filter(c => c.score < 60).map(c => c.course);
+
+const valid = cleanCourses(courses);
+const graded = withGPA(valid);
+console.log('清洗后课程：', graded);
+console.log('加权绩点：', totalGPA(graded));
+console.log('平均分：', averageScore(graded));
+console.log('不及格：', failedCourses(graded));
